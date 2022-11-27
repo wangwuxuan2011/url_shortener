@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="txt/html; charset=utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/home.css">
+
+    <script>
+        if (window.screen.width <= 420)
+            document.getElementsByTagName('meta')['viewport'].content = "initial-scale=0.4, maximum-scale=1.0, minimum-scale=0.4, user-scalable=no"
+        else if (window.screen.width <= 769)
+            document.getElementsByTagName('meta')['viewport'].content = "initial-scale=0.6, maximum-scale=1.0, minimum-scale=0.6, user-scalable=no"
+    </script>
+    <title>短链生成器</title>
+</head>
+<body>
+    <div class="card">
+        <span class="dot1"></span>
+        <span class="dot3"></span>
+        <span class="dot2"></span>
+
+        <div class="card-body">
+
+            <h5 class="big_title">短链接生成器</h5>
+
+            <h5 class="card-title">请输入你的原始链接:</h5>
+            <div class="form">
+                <input type="text" class="form-control" placeholder="例如: https://example.com/" id="text">
+                <button class="btn-cus" type="button" onclick='short_url()' id="search_btn">Go!</button>
+            </div>
+            <p id="notice"></p>
+        </div>
+    </div>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">结果</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="result">没有结果</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick='copy_url("result")' data-toggle="popover"
+                            data-placement="bottom" data-content="Copied!">复制
+                    </button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/jquery.slim.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js"></script>
+</body>
+</html>

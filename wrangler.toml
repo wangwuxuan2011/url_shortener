@@ -1,0 +1,3 @@
+name = "url_shortener"
+main = "src/index.js"
+compatibility_date = "2022-11-27"
