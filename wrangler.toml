@@ -1,3 +1,10 @@
 name = "url_shortener"
 main = "src/index.js"
 compatibility_date = "2022-11-27"
+[env.staging]
+kv_namespaces = [  { binding = "url-shortener", id = "22b65408331d44b8a1aca0dfde1e5a36" }
+]
+
+[env.production]
+kv_namespaces = [  { binding = "url-shortener", id = "22b65408331d44b8a1aca0dfde1e5a36" }
+]
