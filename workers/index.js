@@ -46,16 +46,16 @@ async function checkURL(URL) {
 
 async function save_url(URL) {
     let random_key = await randomString()
-    let is_exist = await url - shortener.get(random_key)
+    let is_exist = await KV.get(random_key)
     console.log(is_exist)
     if (is_exist == null)
-        return await url - shortener.put(random_key, URL), random_key
+        return await KV.put(random_key, URL), random_key
     else
         await save_url(URL)
 }
 
 async function is_url_exist(url_sha512) {
-    let is_exist = await url - shortener.get(url_sha512)
+    let is_exist = await KV.get(url_sha512)
     console.log(is_exist)
     if (is_exist == null) {
         return false
@@ -82,7 +82,7 @@ async function handleRequest(request) {
         } else {
             stat, random_key = await save_url(req["url"])
             if (typeof (stat) == "undefined") {
-                console.log(await url - shortener.put(url_sha512, random_key))
+                console.log(await KV.put(url_sha512, random_key))
             }
         }
 
@@ -117,7 +117,7 @@ async function handleRequest(request) {
         })
     }
 
-    const value = await url - shortener.get(path);
+    const value = await KV.get(path);
     console.log(value)
 
     // If request not in kv, return 404
