@@ -38,7 +38,7 @@ async function checkURL(URL) {
     let Expression = /http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/;
     let objExp = new RegExp(Expression);
     if (objExp.test(str) == true) {
-        return str[0] == 'h';
+        return str[0] === 'h';
     } else {
         return false;
     }
@@ -105,6 +105,7 @@ async function handleRequest(request) {
 
     const requestURL = new URL(request.url)
     const path = requestURL.pathname.split("/")[1]
+    const params = requestURL.search;
     console.log(path)
     if (!path) {
 
@@ -119,7 +120,17 @@ async function handleRequest(request) {
 
     const value = await KV.get(path);
     console.log(value)
+    let location;
 
+    if (params) {
+        location = value + params
+    } else {
+        location = value
+    }
+
+    if (location) {
+        return Response.redirect(location, 302)
+    }
     // If request not in kv, return 404
     return new Response(html404, {
         headers: {

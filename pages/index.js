@@ -23,7 +23,7 @@ function short_url() {
                 document.getElementById("result").innerHTML = window.location.host + res.key;
             $('#exampleModal').modal('show')
         }).catch(function (err) {
-        alert("未知链接，请重试");
+        alert("未知错误请重试");
         console.log(err);
         document.getElementById("search_btn").disabled = false;
         document.getElementById("search_btn").innerHTML = ' Go!';
@@ -69,3 +69,4 @@ function copy_url(id, attr) {
 $(function () {
     $('[data-toggle="popover"]').popover()
 })
+
