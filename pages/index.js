@@ -19,7 +19,7 @@ function short_url() {
             document.getElementById("search_btn").disabled = false;
             document.getElementById("search_btn").innerHTML = ' Go!';
             if (res.key !== "")
-                document.getElementById("result").innerHTML = window.location.host + res.key;
+                document.getElementById("result").innerHTML = res.key;
             $('#exampleModal').modal('show')
         }).catch(function (err) {
         alert("未知错误请重试");

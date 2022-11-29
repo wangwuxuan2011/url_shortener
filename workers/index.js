@@ -70,7 +70,7 @@ async function handleRequest(request) {
         let req = await request.json()
         console.log(req["url"])
         if (!await checkURL(req["url"])) {
-            return new Response(`{"status":500,"key":": Error: Url illegal."}`, {
+            return new Response(`{"status":500,"key":": 错误：URL无法识别"}`, {
                 headers: response_header,
             })
         }
