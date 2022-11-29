@@ -1,4 +1,5 @@
 let res
+
 function short_url() {
     if (document.querySelector("#text").value === "") {
         alert("URL不能为空！")
@@ -19,7 +20,7 @@ function short_url() {
             document.getElementById("search_btn").disabled = false;
             document.getElementById("search_btn").innerHTML = ' Go!';
             if (res.key !== "")
-                document.getElementById("result").innerHTML = res.key;
+                document.getElementById("result").innerHTML = 'https://' + window.location.host + res.key;
             $('#exampleModal').modal('show')
         }).catch(function (err) {
         alert("未知错误请重试");
