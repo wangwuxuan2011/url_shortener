@@ -1,13 +1,12 @@
 let res
-
-function short_url() {
-    if (document.querySelector("#text").value === "") {
+function shorturl() {
+    if (document.querySelector("#text").value == "") {
         alert("URL不能为空！")
         return
     }
 
-    document.getElementById("search_btn").disabled = true;
-    document.getElementById("search_btn").innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Please wait...';
+    document.getElementById("searchbtn").disabled = true;
+    document.getElementById("searchbtn").innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>请稍等…';
     fetch(window.location.pathname, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -17,21 +16,21 @@ function short_url() {
     })
         .then(function (myJson) {
             res = myJson;
-            document.getElementById("search_btn").disabled = false;
-            document.getElementById("search_btn").innerHTML = ' Go!';
+            document.getElementById("searchbtn").disabled = false;
+            document.getElementById("searchbtn").innerHTML = ' Go!';
             if (res.key !== "")
                 document.getElementById("result").innerHTML = window.location.host + res.key;
             $('#exampleModal').modal('show')
         }).catch(function (err) {
         alert("未知错误请重试");
         console.log(err);
-        document.getElementById("search_btn").disabled = false;
-        document.getElementById("search_btn").innerHTML = ' Go!';
+        document.getElementById("searchbtn").disabled = false;
+        document.getElementById("searchbtn").innerHTML = ' Go!';
     })
 }
 
-function copy_url(id, attr) {
-    let target;
+function copyurl(id, attr) {
+    let target = null;
 
     if (attr) {
         target = document.createElement('div');
@@ -69,4 +68,8 @@ function copy_url(id, attr) {
 $(function () {
     $('[data-toggle="popover"]').popover()
 })
-
+console.log("https://github.com/xyTom/Url-Shorten-Worker/")
+let notice = "Notice: This service is for demonstration purposes only and the generated short links will automatically expire after 24 hours."
+if (window.location.host == "5it.me") {
+    document.getElementById("notice").innerHTML = notice
+}
