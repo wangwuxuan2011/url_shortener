@@ -10,9 +10,11 @@ const html404 = `<!DOCTYPE html>
 </body>`
 
 let response_header = {
-    "content-type": "text/html;charset=UTF-8",
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "POST",
+    'content-type': 'application/json;charset=UTF-8',
+    'Access-Control-Allow-Headers': 'Content-Type,Fetch-Mode,accept',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET,POST,OPTIONS',
+    'Access-Control-Max-Age': '86400',
 }
 
 async function randomString(len = 6) {
@@ -106,8 +108,8 @@ async function handleRequest(request) {
                 headers: response_header,
             })
         }
-    } else if (request.method === "OPTIONS") {
-        return new Response(`{"status":400,"key":"错误：请求无法识别"}`, {
+    } else if (request.method !== "GET") {
+        return new Response(``, {
             headers: response_header,
         })
 

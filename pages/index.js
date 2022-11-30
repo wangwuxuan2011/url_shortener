@@ -16,9 +16,8 @@ function short_url() {
         console.log(response)
         return response.json();
     })
-        .then(function (myJson) {
-            console.log(myJson)
-            res = myJson;
+        .then(function (res) {
+            console.log(res)
             document.getElementById("search_btn").disabled = false;
             document.getElementById("search_btn").innerHTML = ' Go!';
             if (res.status === 200)
@@ -27,7 +26,7 @@ function short_url() {
                 document.getElementById("result").innerHTML = res.key;
             $('#exampleModal').modal('show')
         }).catch(function (err) {
-        alert("未知错误请重试");
+        alert("错误,请重试");
         console.log(err);
         document.getElementById("search_btn").disabled = false;
         document.getElementById("search_btn").innerHTML = ' Go!';
@@ -36,7 +35,6 @@ function short_url() {
 
 function copy_url(id, attr) {
     let target;
-
     if (attr) {
         target = document.createElement('div');
         target.id = 'tempTarget';
