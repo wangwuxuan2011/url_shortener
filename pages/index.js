@@ -21,8 +21,10 @@ function short_url() {
             res = myJson;
             document.getElementById("search_btn").disabled = false;
             document.getElementById("search_btn").innerHTML = ' Go!';
-            if (res.key !== "")
-                document.getElementById("result").innerHTML = 'https://' + window.location.host + res.key;
+            if (res.status === 200)
+                document.getElementById("result").innerHTML = res.key;
+            else
+                document.getElementById("result").innerHTML = res.key;
             $('#exampleModal').modal('show')
         }).catch(function (err) {
         alert("未知错误请重试");
