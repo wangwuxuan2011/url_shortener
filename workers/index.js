@@ -120,7 +120,7 @@ async function handleRequest(request) {
     const params = requestURL.search;
     console.log(path)
     if (!path) {
-        return Response.redirect(config.index_url, 302)
+        return Response.redirect(config.index_url, 301)
     }
 
     const value = await KV.get(path);
