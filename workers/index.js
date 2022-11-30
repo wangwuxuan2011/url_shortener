@@ -1,3 +1,8 @@
+const config = {
+    "workers_url": "https://xuan.gq",//workers绑定短链接域名
+    "index_url": "https://url.xuan.gq",//首页URL
+    "url_length": 4,//短链接长度
+}
 const html404 = `<!DOCTYPE html>
 <body>
   <h1>404 Not Found.</h1>
@@ -6,10 +11,11 @@ const html404 = `<!DOCTYPE html>
 
 let response_header = {
     "content-type": "text/html;charset=UTF-8",
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "POST",
 }
 
-async function randomString(len) {
-    len = len || 6;
+async function randomString(len = 6) {
     let $chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';
     /****默认去掉了容易混淆的字符oOLl,9gq,Vv,Uu,I1****/
     let maxPos = $chars.length;
@@ -34,18 +40,21 @@ async function sha512(url) {
 }
 
 async function checkURL(URL) {
-    let str = URL;
-    let Expression = /http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/;
+    let Expression = /([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/;
+    let Expression_protocol = /http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/;
     let objExp = new RegExp(Expression);
-    if (objExp.test(str) == true) {
-        return str[0] === 'h';
+    let objExp_protocol = new RegExp(Expression_protocol);
+    if (objExp_protocol.test(URL) === true) {
+        return URL;
+    } else if (objExp.test(URL) === true) {
+        return "http://" + URL;
     } else {
-        return false;
+        return null;
     }
 }
 
 async function save_url(URL) {
-    let random_key = await randomString()
+    let random_key = await randomString(config.url_length)
     let is_exist = await KV.get(random_key)
     console.log(is_exist)
     if (is_exist == null)
@@ -68,19 +77,20 @@ async function handleRequest(request) {
     console.log(request)
     if (request.method === "POST") {
         let req = await request.json()
-        console.log(req["url"])
-        if (!await checkURL(req["url"])) {
-            return new Response(`{"status":500,"key":": 错误：URL无法识别"}`, {
+        let url = await checkURL(req["url"])
+        console.log(url)
+        if (!url) {
+            return new Response(`{"status":400,"key":"错误：URL无法识别"}`, {
                 headers: response_header,
             })
         }
         let stat, random_key
-        let url_sha512 = await sha512(req["url"])
+        let url_sha512 = await sha512(url)
         let url_key = await is_url_exist(url_sha512)
         if (url_key) {
             random_key = url_key
         } else {
-            stat, random_key = await save_url(req["url"])
+            stat, random_key = await save_url(url)
             if (typeof (stat) == "undefined") {
                 console.log(await KV.put(url_sha512, random_key))
             }
@@ -88,16 +98,16 @@ async function handleRequest(request) {
 
         console.log(stat)
         if (typeof (stat) == "undefined") {
-            return new Response(`{"status":200,"key":"/` + random_key + `"}`, {
+            return new Response(`{"status":200,"key":"${config.workers_url}/${random_key}"}`, {
                 headers: response_header,
             })
         } else {
-            return new Response(`{"status":200,"key":": Error:Reach the KV write limitation."}`, {
+            return new Response(`{"status":500,"key":"错误:KV写入限制。"}`, {
                 headers: response_header,
             })
         }
     } else if (request.method === "OPTIONS") {
-        return new Response(``, {
+        return new Response(`{"status":400,"key":"错误：请求无法识别"}`, {
             headers: response_header,
         })
 
@@ -108,14 +118,7 @@ async function handleRequest(request) {
     const params = requestURL.search;
     console.log(path)
     if (!path) {
-
-        const html = await fetch("https://url-shortener.pages-source.xuan.gq")
-
-        return new Response(await html.text(), {
-            headers: {
-                "content-type": "text/html;charset=UTF-8",
-            },
-        })
+        return Response.redirect(config.index_url, 302)
     }
 
     const value = await KV.get(path);

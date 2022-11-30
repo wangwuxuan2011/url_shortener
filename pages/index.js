@@ -1,21 +1,23 @@
 let res
-
+let api_url = "https://xuan.gq"
 function short_url() {
-    if (document.querySelector("#text").value === "") {
-        alert("URL不能为空！")
+    let url = checkURL($("#url").val())
+    if (!url) {
+        alert("请输入正确的URL！")
         return
     }
-
     document.getElementById("search_btn").disabled = true;
     document.getElementById("search_btn").innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>请稍等…';
-    fetch(window.location.pathname, {
+    fetch(api_url, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({url: document.querySelector("#text").value})
+        body: JSON.stringify({url})
     }).then(function (response) {
+        console.log(response)
         return response.json();
     })
         .then(function (myJson) {
+            console.log(myJson)
             res = myJson;
             document.getElementById("search_btn").disabled = false;
             document.getElementById("search_btn").innerHTML = ' Go!';
@@ -30,7 +32,7 @@ function short_url() {
     })
 }
 
-function copyurl(id, attr) {
+function copy_url(id, attr) {
     let target;
 
     if (attr) {
@@ -63,6 +65,18 @@ function copyurl(id, attr) {
     if (attr) {
         // remove temp target
         target.parentElement.removeChild(target);
+    }
+}
+
+function checkURL(URL) {
+    let Expression_protocol = /http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/;
+    let Expression = /([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/;
+    if (Expression_protocol.test(URL) === true) {
+        return URL;
+    } else if (Expression.test(URL) === true) {
+        return "http://" + URL;
+    } else {
+        return null;
     }
 }
 
