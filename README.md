@@ -12,7 +12,8 @@
 4. 在Cloudflare Workers创建自己的项目
 5. 复制`workers/index.js`的内容到复制自己的项目中
 6. 将其中的`config`根据需要填写，`index_url`为你的Cloudflare Pages的地址，`workers_url`为你的Cloudflare Workers的地址
-7. 部署完成
+7. 创建一个KV空间，并绑定到workers中，变量名称设置为`KV`
+8. 部署完成
 
 ## 演示站点
 
