@@ -1,7 +1,7 @@
 const config = {
-    "workers_url": "https://xuan.gq",//workers绑定短链接域名
-    "index_url": "https://url.xuan.gq",//首页URL
-    "url_length": 4,//短链接长度
+    "workers_url": "https://0135.cf",//workers绑定短链接域名
+    "index_url": "https://url.0135.cf",//首页URL
+    "url_length": 6,//短链接长度
 }
 const html404 = `<!DOCTYPE html>
 <body>
