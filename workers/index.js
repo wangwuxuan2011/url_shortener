@@ -1,6 +1,4 @@
 const config = {
-    "workers_url": "https://0135.cf",//workers绑定短链接域名
-    "index_url": "https://url.0135.cf",//首页URL
     "url_length": 6,//短链接长度
 }
 const html404 = `<!DOCTYPE html>
@@ -76,7 +74,7 @@ async function is_url_exist(url_sha512) {
 }
 
 async function handleRequest(request) {
-    console.log(request)
+    // console.log(request)
     if (request.method === "POST") {
         let req = await request.json()
         let url = await checkURL(req["url"])
@@ -100,7 +98,7 @@ async function handleRequest(request) {
 
         console.log(stat)
         if (typeof (stat) == "undefined") {
-            return new Response(`{"status":200,"key":"${config.workers_url}/${random_key}"}`, {
+            return new Response(`{"status":200,"key":"${config.url}${random_key}"}`, {
                 headers: response_header,
             })
         } else {
@@ -147,5 +145,7 @@ async function handleRequest(request) {
 
 
 addEventListener("fetch", async event => {
+    config.url = event.request.url
+    config.index_url = "https://url." + event.request.headers.get("host")
     event.respondWith(handleRequest(event.request))
 })

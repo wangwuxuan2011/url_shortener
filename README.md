@@ -9,11 +9,13 @@
 1. Fork本项目
 2. 在Cloudflare Pages创建自己的项目
 3. 使用Fork的项目进行部署（根目录输入pages）
-4. 在Cloudflare Workers创建自己的项目
-5. 复制`workers/index.js`的内容到复制自己的项目中
-6. 将其中的`config`根据需要填写，`index_url`为你的Cloudflare Pages的地址，`workers_url`为你的Cloudflare Workers的地址
-7. 创建一个KV空间，并绑定到workers中，变量名称设置为`KV`
-8. 部署完成
+4. 设置自定义的域名，将pages部署到`url`子域（`url.xxxx.xx`）
+5. 在Cloudflare Workers创建自己的项目
+6. 复制`workers/index.js`的内容到复制自己的项目中
+7. 将其中的`config`根据需要填写
+8. 创建一个KV空间，并绑定到workers中，变量名称设置为`KV`
+9. 设置自定义的域名，将pages部署到主域（`xxxx.xx`）
+10. 部署完成
 
 ## 演示站点
 

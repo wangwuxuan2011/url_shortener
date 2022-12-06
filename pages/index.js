@@ -1,5 +1,5 @@
 let res
-let api_url = "https://0135.cf"
+let api_url = "https://" + location.host
 function short_url() {
     let url = checkURL($("#url").val())
     if (!url) {
