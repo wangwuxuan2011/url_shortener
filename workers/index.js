@@ -145,7 +145,7 @@ async function handleRequest(request) {
 
 
 addEventListener("fetch", async event => {
-    config.url = event.request.url
-    config.index_url = "https://url." + event.request.headers.get("host")
+    config.url = event.request.url//获取当前域名
+    config.index_url = "https://url." + event.request.headers.get("host")//首页地址
     event.respondWith(handleRequest(event.request))
 })

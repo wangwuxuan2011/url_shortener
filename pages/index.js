@@ -1,6 +1,6 @@
 let res
-//部署域名仅支持xxx.xxx.xxx格式
-let api_url = "https://" + location.host.split('.').slice(1).join('.')
+//pages部署域名仅支持url.xxx.xxx格式
+let api_url = "https://" + location.host.split('.').slice(1).join('.')//获取域名
 
 function short_url() {
     let url = checkURL($("#url").val())
