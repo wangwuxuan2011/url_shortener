@@ -1,5 +1,7 @@
 let res
-let api_url = "https://" + location.host
+//部署域名仅支持xxx.xxx.xxx格式
+let api_url = "https://" + location.host.split('.').slice(1).join('.')
+
 function short_url() {
     let url = checkURL($("#url").val())
     if (!url) {
